@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/gdsc_frontend/',
+  base: './',  // Ensures correct asset paths for GitHub Pages
   build: {
     outDir: 'dist'
   }
