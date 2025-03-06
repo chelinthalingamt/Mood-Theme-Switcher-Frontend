@@ -1,6 +1,9 @@
 import React from "react";
-import { ThemeProvider } from "./ThemeProvider";
-import MoodSelector from "./MoodSelector";
+import { ThemeProvider } from "./components/ThemeProvider";
+import MoodSelector from "./components/MoodSelector";
+import React from "react";
+import { ThemeProvider } from "./components/ThemeProvider";
+import MoodSelector from "./components/MoodSelector";
 
 function App() {
   return (
@@ -11,3 +14,4 @@ function App() {
 }
 
 export default App;
+
