@@ -1,52 +1,46 @@
-import React from "react";
-import { useTheme } from "./ThemeProvider";
-import MoodButton from "./MoodButton";
+import React, { useState, useEffect } from "react";
 
-const MoodSelector = () => {
-  const { selectedMood, handleMoodChange, moods } = useTheme();
-
-  const handleSurpriseMe = () => {
-    const moodKeys = Object.keys(moods);
-    const randomMood = moodKeys[Math.floor(Math.random() * moodKeys.length)];
-    handleMoodChange(randomMood);
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center bg-white bg-opacity-30 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-md text-center">
-      <h1 className="text-4xl font-bold drop-shadow-md">Mood-Based Theme Switcher</h1>
-      <p className="text-2xl mt-4 font-medium">
-        {moods[selectedMood].emoji} {selectedMood}
-      </p>
-
-      {/* Mood Dropdown */}
-      <select
-        value={selectedMood}
-        onChange={(e) => handleMoodChange(e.target.value)}
-        className="mt-4 p-2 rounded-md border border-gray-600 bg-white"
-      >
-        {Object.keys(moods).map((mood) => (
-          <option key={mood} value={mood}>
-            {moods[mood].emoji} {mood}
-          </option>
-        ))}
-      </select>
-
-      {/* Mood Buttons */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 w-full">
-        {Object.keys(moods).map((mood) => (
-          <MoodButton key={mood} mood={mood} />
-        ))}
-      </div>
-
-      {/* Surprise Me Button */}
-      <button
-        onClick={handleSurpriseMe}
-        className="mt-6 px-6 py-3 text-lg font-semibold rounded-lg shadow-md bg-gray-800 text-white border border-gray-600 transition-all hover:bg-gray-700 hover:scale-105"
-      >
-        🎲 Surprise Me!
-      </button>
-    </div>
-  );
+const moods = {
+  Happy: { background: "linear-gradient(135deg, #ffeb3b, #ffcc00)", color: "#000", emoji: "😃" },
+  Sad: { background: "linear-gradient(135deg, #90a4ae, #607d8b)", color: "#fff", emoji: "😢" },
+  Calm: { background: "linear-gradient(135deg, #80cbc4, #4db6ac)", color: "#000", emoji: "🧘" },
+  Angry: { background: "linear-gradient(135deg, #e57373, #d32f2f)", color: "#fff", emoji: "😡" },
+  Energetic: { background: "linear-gradient(135deg, #ff9800, #f57c00)", color: "#000", emoji: "⚡" },
 };
 
-export default MoodSelector;
+export default function MoodThemeSwitcher() {
+  const [selectedMood, setSelectedMood] = useState(() => {
+    return localStorage.getItem("selectedMood") || "Happy";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("selectedMood", selectedMood);
+  }, [selectedMood]);
+
+  return (
+    <div
+      className="flex flex-col items-center justify-center min-h-screen w-full transition-all text-center"
+      style={{
+        background: moods[selectedMood].background,
+        color: moods[selectedMood].color,
+      }}
+    >
+      <h1 className="text-4xl font-bold mb-4">Mood-Based Theme Switcher</h1>
+      <p className="text-2xl mb-6">Current Mood: {moods[selectedMood].emoji} {selectedMood}</p>
+
+      {/* Mood Buttons */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {Object.keys(moods).map((mood) => (
+          <button
+            key={mood}
+            onClick={() => setSelectedMood(mood)}
+            className="px-6 py-3 rounded-lg shadow-md font-semibold border border-gray-700 transition-all hover:scale-105"
+            style={{ background: moods[mood].background, color: moods[mood].color }}
+          >
+            {moods[mood].emoji} {mood}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
