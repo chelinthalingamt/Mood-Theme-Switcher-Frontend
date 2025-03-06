@@ -25,19 +25,19 @@ export default function MoodSelector() {
         color: moods[selectedMood].color,
       }}
     >
-      <div className="flex flex-col items-center justify-center bg-white bg-opacity-30 backdrop-blur-lg p-10 rounded-2xl shadow-2xl w-full max-w-2xl">
-        <h1 className="text-5xl font-extrabold drop-shadow-md">Mood-Based Theme Switcher</h1>
-        <p className="text-3xl mt-6 font-semibold">
+      <div className="flex flex-col items-center justify-center bg-white bg-opacity-30 backdrop-blur-lg p-12 rounded-2xl shadow-2xl w-full max-w-3xl">
+        <h1 className="text-6xl font-extrabold drop-shadow-md">Mood-Based Theme Switcher</h1>
+        <p className="text-4xl mt-6 font-semibold">
           {moods[selectedMood].emoji} {selectedMood}
         </p>
 
         {/* Mood Buttons */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 w-full">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mt-10 w-full">
           {Object.keys(moods).map((mood) => (
             <button
               key={mood}
               onClick={() => setSelectedMood(mood)}
-              className="px-8 py-4 text-2xl rounded-lg shadow-lg font-bold border border-gray-700 transition-all hover:scale-110"
+              className="px-10 py-5 text-3xl rounded-lg shadow-lg font-bold border border-gray-700 transition-all hover:scale-110"
               style={{ background: moods[mood].background, color: moods[mood].color }}
             >
               {moods[mood].emoji} {mood}
@@ -48,3 +48,4 @@ export default function MoodSelector() {
     </div>
   );
 }
+
