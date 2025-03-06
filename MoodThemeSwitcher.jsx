@@ -9,9 +9,7 @@ const moods = {
 };
 
 export default function MoodThemeSwitcher() {
-  const [selectedMood, setSelectedMood] = useState(() => {
-    return localStorage.getItem("selectedMood") || "Happy";
-  });
+  const [selectedMood, setSelectedMood] = useState(() => localStorage.getItem("selectedMood") || "Happy");
 
   useEffect(() => {
     localStorage.setItem("selectedMood", selectedMood);
@@ -29,34 +27,40 @@ export default function MoodThemeSwitcher() {
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen transition-all"
+      className="flex flex-col items-center justify-center min-h-screen w-full text-center p-6 transition-all"
       style={{
         background: moods[selectedMood].background,
         color: moods[selectedMood].color,
       }}
     >
-      <h1 className="text-3xl font-bold">Mood-Based Theme Switcher</h1>
-      <p className="text-xl mt-2">Current Mood: {moods[selectedMood].emoji} {selectedMood}</p>
-      
-      <div className="flex space-x-3 mt-4">
-        {Object.keys(moods).map((mood) => (
-          <button
-            key={mood}
-            onClick={() => handleMoodChange(mood)}
-            className="px-4 py-2 rounded-lg shadow-md border border-gray-700"
-            style={{ background: moods[mood].background, color: moods[mood].color }}
-          >
-            {moods[mood].emoji} {mood}
-          </button>
-        ))}
+      <div className="bg-white bg-opacity-30 backdrop-blur-lg p-6 rounded-xl shadow-xl">
+        <h1 className="text-4xl font-bold drop-shadow-md">Mood-Based Theme Switcher</h1>
+        <p className="text-2xl mt-4 font-medium">
+          Current Mood: {moods[selectedMood].emoji} {selectedMood}
+        </p>
+
+        {/* Mood Buttons */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+          {Object.keys(moods).map((mood) => (
+            <button
+              key={mood}
+              onClick={() => handleMoodChange(mood)}
+              className="px-5 py-3 text-lg font-semibold rounded-lg shadow-lg transition-all border border-gray-700 hover:scale-105"
+              style={{ background: moods[mood].background, color: moods[mood].color }}
+            >
+              {moods[mood].emoji} {mood}
+            </button>
+          ))}
+        </div>
+
+        {/* Surprise Me Button */}
+        <button
+          onClick={handleSurpriseMe}
+          className="mt-6 px-6 py-3 text-lg font-semibold rounded-lg shadow-lg bg-gray-800 text-white border border-gray-600 transition-all hover:bg-gray-700 hover:scale-105"
+        >
+          🎲 Surprise Me!
+        </button>
       </div>
-      
-      <button
-        onClick={handleSurpriseMe}
-        className="mt-4 px-5 py-2 rounded-lg shadow-md bg-gray-700 text-white border border-gray-500"
-      >
-        🎲 Surprise Me!
-      </button>
     </div>
   );
 }
